@@ -26,6 +26,9 @@ export default defineNitroConfig({
         queueLimit: 0,
         enableKeepAlive: true,
         keepAliveInitialDelay: 10000,
+        // 空闲连接管理 - 防止使用被 MySQL 服务器关闭的连接
+        maxIdle: 0,
+        idleTimeout: 60000,
       },
     },
   },

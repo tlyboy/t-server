@@ -2,6 +2,7 @@ const whiteList = [
   '/',
   '/v1/user/login',
   '/v1/user/register',
+  '/v1/user/refresh',
   '/v1/file',
   '/v1/file/list',
 ]
@@ -51,7 +52,8 @@ export default defineEventHandler(async (event) => {
   if (!decoded) {
     throw createError({
       statusCode: 401,
-      message: '无效的认证令牌',
+      statusMessage: 'TOKEN_EXPIRED',
+      message: '认证令牌已过期或无效',
     })
   }
 

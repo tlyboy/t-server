@@ -32,10 +32,14 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const token = generateToken(user.id as number)
+    // 生成双 Token
+    const accessToken = generateAccessToken(user.id as number)
+    const refreshToken = await generateRefreshToken(user.id as number)
 
     return {
-      token,
+      accessToken,
+      refreshToken,
+      token: accessToken, // 兼容旧版本前端
       id: user.id,
       nickname: user.nickname,
       username: user.username,
