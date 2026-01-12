@@ -29,6 +29,8 @@ export default defineNitroConfig({
         // 空闲连接管理 - 防止使用被 MySQL 服务器关闭的连接
         maxIdle: 0,
         idleTimeout: 60000,
+        // 连接健康检查 - 每次获取连接前 ping 检测，自动替换已死亡的连接
+        pingOnAcquire: true,
       },
     },
   },
