@@ -25,12 +25,11 @@ export default defineNitroConfig({
         connectionLimit: 10,
         queueLimit: 0,
         enableKeepAlive: true,
-        keepAliveInitialDelay: 10000,
-        // 空闲连接管理 - 防止使用被 MySQL 服务器关闭的连接
-        maxIdle: 0,
-        idleTimeout: 60000,
-        // 连接健康检查 - 每次获取连接前 ping 检测，自动替换已死亡的连接
-        pingOnAcquire: true,
+        keepAliveInitialDelay: 3000, // 3秒后开始发送 TCP keep-alive
+        // 空闲连接管理 - idleTimeout 必须小于 MySQL 的 wait_timeout
+        // MySQL 默认 wait_timeout=28800秒(8小时)，但 Docker 环境可能更短
+        maxIdle: 0, // 不保留空闲连接
+        idleTimeout: 10000, // 10秒后关闭空闲连接（确保比 MySQL 更早关闭）
       },
     },
   },
