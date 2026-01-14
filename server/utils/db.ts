@@ -8,12 +8,13 @@ let pool: Pool | null = null
  */
 function getPool(): Pool {
   if (!pool) {
+    const runtimeConfig = useRuntimeConfig()
     const config = {
-      host: process.env.MYSQL_HOST,
-      port: Number(process.env.MYSQL_PORT) || 3306,
-      user: process.env.MYSQL_USER,
-      password: process.env.MYSQL_PASSWORD,
-      database: process.env.MYSQL_DATABASE,
+      host: runtimeConfig.mysqlHost,
+      port: Number(runtimeConfig.mysqlPort) || 3306,
+      user: runtimeConfig.mysqlUser,
+      password: runtimeConfig.mysqlPassword,
+      database: runtimeConfig.mysqlDatabase,
       // 连接池配置
       waitForConnections: true,
       connectionLimit: 10,

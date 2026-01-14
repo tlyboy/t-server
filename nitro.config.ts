@@ -5,6 +5,12 @@ export default defineNitroConfig({
   runtimeConfig: {
     jwtSecret: '',
     encryptionKey: '', // 32字节 Base64 编码的消息加密主密钥
+    // MySQL 数据库配置
+    mysqlHost: '',
+    mysqlPort: '',
+    mysqlUser: '',
+    mysqlPassword: '',
+    mysqlDatabase: '',
   },
   experimental: {
     websocket: true,
