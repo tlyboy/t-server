@@ -1,3 +1,5 @@
+import { useDatabase } from '~/utils/db'
+
 export default defineWebSocketHandler({
   open(peer) {
     console.log('[ws] 新连接')

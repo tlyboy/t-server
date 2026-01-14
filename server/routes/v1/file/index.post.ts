@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto'
 import { writeFile, mkdir } from 'fs/promises'
 import { join, extname } from 'path'
 import { wsManager } from '~/utils/ws-manager'
+import { useDatabase } from '~/utils/db'
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024 // 100MB
 

@@ -2,6 +2,8 @@ import { existsSync, unlinkSync } from 'fs'
 import { join } from 'path'
 import { wsManager } from '~/utils/ws-manager'
 
+import { useDatabase } from '~/utils/db'
+
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
 

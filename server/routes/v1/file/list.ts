@@ -1,3 +1,5 @@
+import { useDatabase } from '~/utils/db'
+
 export default defineEventHandler(async () => {
   const db = useDatabase()
 

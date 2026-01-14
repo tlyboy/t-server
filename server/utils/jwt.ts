@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
+import { useDatabase } from './db'
 
 const JWT_SECRET = useRuntimeConfig().jwtSecret
 const ACCESS_TOKEN_EXPIRES_IN = '15m'

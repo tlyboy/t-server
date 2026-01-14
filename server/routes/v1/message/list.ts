@@ -1,3 +1,5 @@
+import { useDatabase } from '~/utils/db'
+
 export default defineEventHandler(async (event) => {
   const query = getQuery(event) as {
     chatId: number

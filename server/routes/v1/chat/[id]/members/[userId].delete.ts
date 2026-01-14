@@ -1,3 +1,5 @@
+import { useDatabase } from '~/utils/db'
+
 export default defineEventHandler(async (event) => {
   const currentUserId = event.context.auth.userId
   const chatId = Number(event.context.params?.id)

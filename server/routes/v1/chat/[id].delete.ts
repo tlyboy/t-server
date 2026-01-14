@@ -1,3 +1,5 @@
+import { useDatabase } from '~/utils/db'
+
 export default defineEventHandler(async (event) => {
   const userId = event.context.auth.userId
   const chatId = getRouterParam(event, 'id')

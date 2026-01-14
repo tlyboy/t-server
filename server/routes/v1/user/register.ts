@@ -1,5 +1,7 @@
 import { hash } from 'bcrypt'
 
+import { useDatabase } from '~/utils/db'
+
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const { nickname, username, password } = body
