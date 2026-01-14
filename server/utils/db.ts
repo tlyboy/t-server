@@ -8,7 +8,7 @@ let pool: Pool | null = null
  */
 function getPool(): Pool {
   if (!pool) {
-    pool = mysql.createPool({
+    const config = {
       host: process.env.MYSQL_HOST,
       port: Number(process.env.MYSQL_PORT) || 3306,
       user: process.env.MYSQL_USER,
@@ -23,7 +23,17 @@ function getPool(): Pool {
       // 空闲连接管理
       maxIdle: 0,
       idleTimeout: 10000,
+    }
+
+    console.log('[MySQL] 创建连接池，配置:', {
+      host: config.host,
+      port: config.port,
+      user: config.user,
+      database: config.database,
+      hasPassword: !!config.password,
     })
+
+    pool = mysql.createPool(config)
 
     // 监听连接错误，自动销毁有问题的连接
     pool.on('connection', (connection) => {
