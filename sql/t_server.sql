@@ -5,13 +5,13 @@
  Source Server Type    : MySQL
  Source Server Version : 80100 (8.1.0)
  Source Host           : 47.99.66.165:3306
- Source Schema         : t_talk
+ Source Schema         : t_server
 
  Target Server Type    : MySQL
  Target Server Version : 80100 (8.1.0)
  File Encoding         : 65001
 
- Date: 11/01/2026 19:35:05
+ Date: 15/01/2026 13:26:34
 */
 
 SET NAMES utf8mb4;
@@ -81,9 +81,12 @@ CREATE TABLE `files` (
   `x` float NOT NULL COMMENT 'X 位置 (百分比 0-100)',
   `y` float NOT NULL COMMENT 'Y 位置 (百分比 0-100)',
   `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `pickupCode` varchar(6) DEFAULT NULL COMMENT '6位数字取件码',
+  `requirePickupCode` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否需要取件码才能下载: 0=否, 1=是',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_pickupCode` (`pickupCode`),
   KEY `idx_created` (`createdAt`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Table structure for friends
@@ -115,7 +118,7 @@ CREATE TABLE `messages` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_messages_chatId` (`chatId`),
   KEY `idx_messages_userId` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for refresh_tokens
@@ -132,7 +135,7 @@ CREATE TABLE `refresh_tokens` (
   UNIQUE KEY `token` (`token`),
   KEY `idx_userId` (`userId`),
   KEY `idx_expiresAt` (`expiresAt`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Table structure for users
