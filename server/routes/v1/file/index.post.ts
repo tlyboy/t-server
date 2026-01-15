@@ -19,6 +19,7 @@ export default defineEventHandler(async (event) => {
   const file = formData.find((item) => item.name === 'file')
   const xField = formData.find((item) => item.name === 'x')
   const yField = formData.find((item) => item.name === 'y')
+  const pickupCodeField = formData.find((item) => item.name === 'pickupCode')
 
   if (!file || !file.data || !file.filename) {
     throw createError({
@@ -29,11 +30,19 @@ export default defineEventHandler(async (event) => {
 
   const x = parseFloat(xField?.data?.toString() || '50')
   const y = parseFloat(yField?.data?.toString() || '50')
+  const pickupCode = pickupCodeField?.data?.toString() || null
 
   if (isNaN(x) || isNaN(y) || x < 0 || x > 100 || y < 0 || y > 100) {
     throw createError({
       statusCode: 400,
       message: '无效的位置参数',
+    })
+  }
+
+  if (pickupCode && !/^\d{6}$/.test(pickupCode)) {
+    throw createError({
+      statusCode: 400,
+      message: '取件码必须为6位数字',
     })
   }
 
@@ -60,8 +69,8 @@ export default defineEventHandler(async (event) => {
   // 插入数据库
   const db = useDatabase()
   const result = await db.sql`
-    INSERT INTO files (filename, originalName, mimeType, size, x, y)
-    VALUES (${filename}, ${file.filename}, ${mimeType}, ${file.data.length}, ${x}, ${y})
+    INSERT INTO files (filename, originalName, mimeType, size, x, y, pickupCode)
+    VALUES (${filename}, ${file.filename}, ${mimeType}, ${file.data.length}, ${x}, ${y}, ${pickupCode})
   `
 
   const fileId = (result as any).insertId || (result as any).lastInsertRowid
@@ -74,6 +83,7 @@ export default defineEventHandler(async (event) => {
     size: file.data.length,
     x,
     y,
+    hasPickupCode: !!pickupCode,
     createdAt: new Date().toISOString(),
   }
 

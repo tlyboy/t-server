@@ -6,6 +6,8 @@ import { useDatabase } from '~/utils/db'
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
+  const query = getQuery(event)
+  const code = query.code as string | undefined
 
   if (!id) {
     throw createError({
@@ -18,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
   // 获取文件信息
   const { rows } = await db.sql`
-    SELECT id, filename, originalName, mimeType, size
+    SELECT id, filename, originalName, mimeType, size, pickupCode
     FROM files WHERE id = ${id}
   `
 
@@ -35,6 +37,23 @@ export default defineEventHandler(async (event) => {
     originalName: string
     mimeType: string
     size: number
+    pickupCode: string | null
+  }
+
+  // 验证取件码
+  if (file.pickupCode) {
+    if (!code) {
+      throw createError({
+        statusCode: 403,
+        message: '此文件需要取件码',
+      })
+    }
+    if (file.pickupCode !== code) {
+      throw createError({
+        statusCode: 403,
+        message: '取件码错误',
+      })
+    }
   }
 
   const filePath = join(process.cwd(), 'public', 'files', file.filename)
