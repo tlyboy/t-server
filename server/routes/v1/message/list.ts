@@ -8,8 +8,8 @@ export default defineEventHandler(async (event) => {
   }
 
   const chatId = Number(query.chatId)
-  const limit = Number(query.limit) || 50
-  const offset = Number(query.offset) || 0
+  const limit = String(query.limit || 50)
+  const offset = String(query.offset || 0)
 
   if (!chatId) {
     throw createError({
