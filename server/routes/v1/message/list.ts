@@ -2,12 +2,14 @@ import { useDatabase } from '~/utils/db'
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event) as {
-    chatId: number
-    limit?: number
-    offset?: number
+    chatId?: string
+    limit?: string
+    offset?: string
   }
 
-  const { chatId, limit = 50, offset = 0 } = query
+  const chatId = Number(query.chatId)
+  const limit = Number(query.limit) || 50
+  const offset = Number(query.offset) || 0
 
   if (!chatId) {
     throw createError({
