@@ -69,7 +69,7 @@ async function sql(
   }
 
   try {
-    const [result] = await pool.execute(query, params)
+    const [result] = await pool.query(query, params)
 
     // 处理 INSERT/UPDATE/DELETE 结果
     if (
