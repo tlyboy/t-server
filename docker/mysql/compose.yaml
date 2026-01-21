@@ -1,0 +1,16 @@
+services:
+  mysql:
+    image: mysql:8.1.0
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    command:
+      - --default-authentication-plugin=caching_sha2_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --explicit_defaults_for_timestamp=true
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./mysqlBackup:/data/mysqlBackup
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
