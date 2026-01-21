@@ -7,7 +7,9 @@ export default defineEventHandler(async (event) => {
     offset?: number
   }
 
-  const { chatId, limit = 50, offset = 0 } = query
+  const chatId = Number(query.chatId)
+  const limit = Number(query.limit) || 50
+  const offset = Number(query.offset) || 0
 
   if (!chatId) {
     throw createError({
