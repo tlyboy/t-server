@@ -2,21 +2,21 @@
 
 🌐 T-Server
 
-## Install
+## 安装
 
 ```bash
 git clone https://github.com/tlyboy/t-server.git
 ```
 
-## Usage
+## 使用说明
 
-Copy `.env.example` to `.env` and configure:
+复制 `.env.example` 为 `.env` 并配置：
 
 ```sh
 NITRO_JWT_SECRET=
 NITRO_ENCRYPTION_KEY=
 
-# MySQL database configuration
+# MySQL 数据库配置
 NITRO_MYSQL_HOST=
 NITRO_MYSQL_PORT=
 NITRO_MYSQL_USER=
@@ -30,6 +30,6 @@ pnpm dev
 pnpm build
 ```
 
-## License
+## 使用许可
 
 [MIT](https://opensource.org/licenses/MIT) © Guany
