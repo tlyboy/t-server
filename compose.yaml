@@ -1,0 +1,20 @@
+services:
+  t-server:
+    build:
+      context: .
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    environment:
+      - NITRO_JWT_SECRET=${NITRO_JWT_SECRET}
+      - NITRO_ENCRYPTION_KEY=${NITRO_ENCRYPTION_KEY}
+      - NITRO_MYSQL_HOST=${MYSQL_HOST}
+      - NITRO_MYSQL_PORT=${MYSQL_PORT}
+      - NITRO_MYSQL_USER=${MYSQL_USER}
+      - NITRO_MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - NITRO_MYSQL_DATABASE=${MYSQL_DATABASE}
+    volumes:
+      - ./data/uploads:/public/uploads
+      - ./data/files:/public/files
